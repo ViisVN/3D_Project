@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CharacteMove : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CharacteMove : MonoBehaviour
     public float moveSpeed = 5f;
     public Rigidbody rb;
     public Animator animator;
+    public NavMeshAgent _navmesh;
     private void Awake()
     {
         if (m_instance != null)
@@ -17,6 +19,7 @@ public class CharacteMove : MonoBehaviour
             return;
         }
         m_instance = this;
+  _navmesh = GetComponent<NavMeshAgent>();
 
     }
     private void Update()
@@ -41,7 +44,6 @@ public class CharacteMove : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(moveDirection);
             rb.MoveRotation(newRotation);
         }
-
     }
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -51,4 +53,5 @@ public class CharacteMove : MonoBehaviour
         //Gizmos.DrawSphere(pos, groundCheckRadius);
     }
 #endif
+
 }
