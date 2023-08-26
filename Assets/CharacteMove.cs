@@ -44,6 +44,10 @@ public class CharacteMove : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(moveDirection);
             rb.MoveRotation(newRotation);
         }
+        if(Input.GetMouseButtonDown(0))
+        {
+            MouseMove();
+        }
     }
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -53,5 +57,18 @@ public class CharacteMove : MonoBehaviour
         //Gizmos.DrawSphere(pos, groundCheckRadius);
     }
 #endif
+private void MouseMove()
+{
+    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    RaycastHit raycastInfo;
+    if(Physics.Raycast(ray,out raycastInfo,Mathf.Infinity))
+    {
+          Vector3 groundPoint = raycastInfo.point;
+    
+    // The hitInfo.normal contains the surface normal at the point of intersection.
+    Vector3 surfaceNormal = raycastInfo.normal;
+    _navmesh.SetDestination(groundPoint);
+    }
+}
 
 }
